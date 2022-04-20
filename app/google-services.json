@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647304922969",
+    "project_id": "flooringiconmanager-1a956",
+    "storage_bucket": "flooringiconmanager-1a956.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647304922969:android:606a5f986ce419096cee48",
+        "android_client_info": {
+          "package_name": "edu.qc.seclass.fim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647304922969-84ksubjopetu9bvbp36dn5h0632i5frg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMEe6IS6sWw4Nu5jQB5Epk3TbBZQFaY-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647304922969-84ksubjopetu9bvbp36dn5h0632i5frg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

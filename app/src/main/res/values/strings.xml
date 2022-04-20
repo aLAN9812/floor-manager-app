@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">FIM</string>
+
+    <string-array name="categoryArray">
+        <item>Tile</item>
+        <item>Stone</item>
+        <item>Wood</item>
+        <item>Laminate</item>
+        <item>Vinyl</item>
+    </string-array>
+
+    <string-array name="storeArray">
+        <item>Flushing #1214</item>
+        <item>College Point #1277</item>
+        <item>Jamaica #6928</item>
+        <item>Ozone Park #1215</item>
+        <item>Springfield Gardens #1238</item>
+    </string-array>
+
+    <string-array name="tileType">
+
+    </string-array>
+
+    <string-array name="StoneType">
+        <item>Countertop</item>
+        <item>Floor or Wall Tile</item>
+        <item>Mosaic</item>
+        <item>Shower Bench</item>
+        <item>Trims and Pencils</item>
+    </string-array>
+
+    <string-array name="WoodType">
+        <item>Bamboo</item>
+        <item>Cork</item>
+        <item>Countertop</item>
+        <item>Engineered</item>
+        <item>Solid</item>
+    </string-array>
+
+    <string-array name="LaminateType">
+
+    </string-array>
+
+    <string-array name="VinylType">
+
+    </string-array>
+
+    <string-array name="boolArray">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+</resources>
