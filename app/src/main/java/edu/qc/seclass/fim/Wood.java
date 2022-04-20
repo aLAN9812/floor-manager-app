@@ -12,10 +12,9 @@ public class Wood extends Floor {
                 String brand,
                 String type,
                 double price,
-                String category,
                 double stock,
                 String species) {
-        super(store, pName, color, wide, longUnit, thickness, brand, type, price, category, stock);
+        super(store, pName, color, wide, longUnit, thickness, brand, type, price, stock);
         this.species = species;
     }
 

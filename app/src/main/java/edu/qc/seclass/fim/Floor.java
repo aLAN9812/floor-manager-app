@@ -10,7 +10,6 @@ public class Floor {
     private String brand;
     private String type;
     private double price;
-    private String category;
     private double stock;
 
     public Floor(){}
@@ -24,7 +23,6 @@ public class Floor {
                  String brand,
                  String type,
                  double price,
-                 String category,
                  double stock){
         this.store = store;
         this.pName = pName;
@@ -35,7 +33,6 @@ public class Floor {
         this.brand = brand;
         this.type = type;
         this.price = price;
-        this.category = category;
         this.stock = stock;
     }
 
@@ -73,10 +70,6 @@ public class Floor {
 
     public double getPrice() {
         return price;
-    }
-
-    public String getCategory() {
-        return category;
     }
 
     public double getStock() {
@@ -117,10 +110,6 @@ public class Floor {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public void setStock(double stock) {

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class SearchResult extends AppCompatActivity {
     private Button back;
     private Intent toSearch;
     private DAOFloor dao;
-    private String pName, color, wide, longUnit, thickness, brand, price, stock, material, species, waterResis, waterProof;
+    private String pName, color, wide, longUnit, thickness, brand, price, stock, species;
+    private DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +48,22 @@ public class SearchResult extends AppCompatActivity {
         ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.item, list);
         listView.setAdapter(adapter);
 
-        dao.getDatabaseReference().addValueEventListener(new ValueEventListener() {
+        if(category.equals("Tile"))
+            ref = dao.getTile();
+        if(category.equals("Stone"))
+            ref = dao.getStone();
+        if(category.equals("Wood"))
+            ref = dao.getWood();
+        if(category.equals("Laminate"))
+            ref = dao.getLaminate();
+        if(category.equals("Vinyl"))
+            ref = dao.getVinyl();
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot data: snapshot.getChildren()) {
                     if(data.child("store").getValue().equals(store) &&
-                            data.child("category").getValue().equals(category) &&
                             data.child("type").getValue().equals(type)) {
                         pName = data.child("pName").getValue().toString();
                         color = data.child("color").getValue().toString();
@@ -64,21 +76,9 @@ public class SearchResult extends AppCompatActivity {
                         String item = String.format(
                                 "Product name: %s\nColor: %s\nSize: %s\" x %s\" x %smm\nBrand: %s\nPrice: $%s\nStock: %s sqft\n",
                                 pName, color, wide, longUnit, thickness, brand, price, stock);
-                        if(data.child("category").getValue().equals("Tile") || data.child("category").getValue().equals("Stone")) {
-                            material = data.child("material").getValue().toString();
-                            item += String.format("Material: %s", material);
-                        }
-                        if(data.child("category").getValue().equals("Wood")) {
+                        if(category.equals("Wood")) {
                             species = data.child("species").getValue().toString();
                             item.concat(String.format("Species: %s", species));
-                        }
-                        if(data.child("category").getValue().equals("Laminate")) {
-                            waterResis = data.child("waterResis").getValue().toString();
-                            item.concat(String.format("Water Resistant: %s", waterResis));
-                        }
-                        if(data.child("category").getValue().equals("Vinyl")) {
-                            waterProof = data.child("waterProof").getValue().toString();
-                            item.concat(String.format("Species: %s", waterProof));
                         }
                         list.add(item);
                     }

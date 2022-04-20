@@ -1,7 +1,6 @@
 package edu.qc.seclass.fim;
 
 public class Tile extends  Floor {
-    private String material;
 
     public Tile(String store,
                 String pName,
@@ -12,18 +11,8 @@ public class Tile extends  Floor {
                 String brand,
                 String type,
                 double price,
-                String category,
-                double stock,
-                String material) {
-        super(store, pName, color, wide, longUnit, thickness, brand, type, price, category, stock);
-        this.material = material;
+                double stock) {
+        super(store, pName, color, wide, longUnit, thickness, brand, type, price, stock);
     }
 
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
 }

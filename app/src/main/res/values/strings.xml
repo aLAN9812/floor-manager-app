@@ -18,18 +18,22 @@
     </string-array>
 
     <string-array name="tileType">
-
+        <item>Porcelain</item>
+        <item>Ceramic</item>
+        <item>Resin</item>
+        <item>Glass</item>
     </string-array>
 
-    <string-array name="StoneType">
-        <item>Countertop</item>
-        <item>Floor or Wall Tile</item>
-        <item>Mosaic</item>
-        <item>Shower Bench</item>
-        <item>Trims and Pencils</item>
+
+    <string-array name="stoneType">
+        <item>Marble</item>
+        <item>Pebble</item>
+        <item>Slate</item>
+        <item>Granite</item>
+        <item>Travertine</item>
     </string-array>
 
-    <string-array name="WoodType">
+    <string-array name="woodType">
         <item>Bamboo</item>
         <item>Cork</item>
         <item>Countertop</item>
@@ -37,12 +41,23 @@
         <item>Solid</item>
     </string-array>
 
-    <string-array name="LaminateType">
-
+    <string-array name="woodSpecies">
+        <item>Oak</item>
+        <item>Hickory</item>
+        <item>Maple</item>
+        <item>Acacia</item>
+        <item>Walnut</item>
+        <item>Birch</item>
     </string-array>
 
-    <string-array name="VinylType">
+    <string-array name="laminateType">
+        <item>Regular</item>
+        <item>Water Resistant</item>
+    </string-array>
 
+    <string-array name="vinylType">
+        <item>Water Resistant</item>
+        <item>Waterproof</item>
     </string-array>
 
     <string-array name="boolArray">

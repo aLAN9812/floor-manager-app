@@ -16,17 +16,19 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 public class AddFloor extends AppCompatActivity {
-    private Spinner categorySpinner, storeSpinner, boolSpinner1, boolSpinner2;
-    private EditText pName, color, wide, longUnit, thickness, brand, type, price, stock, material, species;
-    private TableRow materialRow, speciesRow, waterResisRow, waterProofRow;
+    private Spinner categorySpinner, storeSpinner, typeSpinner, speciesSpinner;
+    private EditText pName, color, wide, longUnit, thickness, brand, price, stock;
+    private TableRow speciesRow;
     private DAOFloor dao;
     private Button add, cancel;
     private Intent toAdmin;
-    private String store, storeId, category;
-    private boolean waterResis, waterProof;
+    private String store, storeId, category, type, species;
+    private DatabaseReference ref, root;
+    private ArrayAdapter<String> storeAdapter, categoryAdapter, tiletypeAdapter, stonetypeAdapter, woodtypeAdapter, laminatetypeAdapter, vinyltypeAdapter, speciesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +37,33 @@ public class AddFloor extends AppCompatActivity {
 
         this.setTitle("Add Product");
 
-        categorySpinner = (Spinner) findViewById(R.id.category);
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.categoryArray));
+        categorySpinner = findViewById(R.id.category);
+        categoryAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.categoryArray));
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
 
-        storeSpinner = (Spinner) findViewById(R.id.store);
-        ArrayAdapter<String> storeAdapter = new ArrayAdapter<String>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.storeArray));
+        storeSpinner = findViewById(R.id.store);
+        storeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.storeArray));
         storeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         storeSpinner.setAdapter(storeAdapter);
 
-        boolSpinner1 = (Spinner) findViewById(R.id.waterResis);
-        boolSpinner2 = (Spinner) findViewById(R.id.waterProof);
-        ArrayAdapter<String> boolAdapter = new ArrayAdapter<String>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.boolArray));
-        boolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        boolSpinner1.setAdapter(boolAdapter);
-        boolSpinner2.setAdapter(boolAdapter);
+        typeSpinner = findViewById(R.id.typeSpinner);
+        tiletypeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.tileType));
+        tiletypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        stonetypeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.stoneType));
+        stonetypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        woodtypeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.woodType));
+        woodtypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        laminatetypeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.laminateType));
+        laminatetypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vinyltypeAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.vinylType));
+        vinyltypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(tiletypeAdapter);
+
+        speciesSpinner = findViewById(R.id.speciesSpinner);
+        speciesAdapter = new ArrayAdapter<>(AddFloor.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.woodSpecies));
+        speciesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        speciesSpinner.setAdapter(speciesAdapter);
 
         pName = findViewById(R.id.pName);
         color = findViewById(R.id.color);
@@ -58,54 +71,37 @@ public class AddFloor extends AppCompatActivity {
         longUnit = findViewById(R.id.longUnit);
         thickness = findViewById(R.id.thickness);
         brand = findViewById(R.id.brand);
-        type = findViewById(R.id.type);
         price = findViewById(R.id.price);
         stock = findViewById(R.id.stock);
-        material = findViewById(R.id.material);
-        species = findViewById(R.id.species);
 
-        materialRow = findViewById(R.id.materialRow);
         speciesRow = findViewById(R.id.speciesRow);
-        waterResisRow = findViewById(R.id.waterResisRow);
-        waterProofRow = findViewById(R.id.waterProofRow);
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getSelectedItem().toString().equals("Tile") || adapterView.getSelectedItem().toString().equals("Stone")) {
-                    materialRow.setVisibility(View.VISIBLE);
+                if(adapterView.getSelectedItem().toString().equals("Tile")) {
                     speciesRow.setVisibility(View.GONE);
-                    waterResisRow.setVisibility(View.GONE);
-                    waterProofRow.setVisibility(View.GONE);
-                    material.setText("");
-                    species.setText("Not available");
+                    typeSpinner.setAdapter(tiletypeAdapter);
+                }
+
+                if(adapterView.getSelectedItem().toString().equals("Stone")) {
+                    speciesRow.setVisibility(View.GONE);
+                    typeSpinner.setAdapter(stonetypeAdapter);
                 }
 
                 if(adapterView.getSelectedItem().toString().equals("Wood")) {
                     speciesRow.setVisibility(View.VISIBLE);
-                    materialRow.setVisibility(View.GONE);
-                    waterResisRow.setVisibility(View.GONE);
-                    waterProofRow.setVisibility(View.GONE);
-                    species.setText("");
-                    material.setText("Not available");
+                    typeSpinner.setAdapter(woodtypeAdapter);
                 }
 
                 if(adapterView.getSelectedItem().toString().equals("Laminate")) {
-                    waterResisRow.setVisibility(View.VISIBLE);
-                    materialRow.setVisibility(View.GONE);
                     speciesRow.setVisibility(View.GONE);
-                    waterProofRow.setVisibility(View.GONE);
-                    material.setText("Not available");
-                    species.setText("Not available");
+                    typeSpinner.setAdapter(laminatetypeAdapter);
                 }
 
                 if(adapterView.getSelectedItem().toString().equals("Vinyl")) {
-                    waterProofRow.setVisibility(View.VISIBLE);
-                    materialRow.setVisibility(View.GONE);
                     speciesRow.setVisibility(View.GONE);
-                    waterResisRow.setVisibility(View.GONE);
-                    material.setText("Not available");
-                    species.setText("Not available");
+                    typeSpinner.setAdapter(vinyltypeAdapter);
                 }
             }
 
@@ -115,39 +111,42 @@ public class AddFloor extends AppCompatActivity {
             }
         });
 
-        dao = new DAOFloor();
-
         add = findViewById(R.id.add);
         add.setOnClickListener(v -> {
             store = storeSpinner.getSelectedItem().toString();
             storeId = store.substring(store.length() - 4);
             category = categorySpinner.getSelectedItem().toString();
-            waterResis = boolSpinner1.getSelectedItem().toString().equals("Yes") ? true : false;
-            waterProof = boolSpinner2.getSelectedItem().toString().equals("Yes") ? true : false;
+            type = typeSpinner.getSelectedItem().toString();
+
+
+            dao = new DAOFloor();
+            root = dao.getDatabaseReference();
+
             if(pName.getText().toString().isEmpty() ||
                     color.getText().toString().isEmpty() ||
                     wide.getText().toString().isEmpty() ||
                     longUnit.getText().toString().isEmpty() ||
                     thickness.getText().toString().isEmpty() ||
                     brand.getText().toString().isEmpty() ||
-                    type.getText().toString().isEmpty() ||
                     price.getText().toString().isEmpty() ||
-                    stock.getText().toString().isEmpty() ||
-                    material.getText().toString().isEmpty() ||
-                    species.getText().toString().isEmpty())
+                    stock.getText().toString().isEmpty())
                 Toast.makeText(this, "Please enter all information", Toast.LENGTH_SHORT).show();
             else {
-                dao.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                root.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         boolean exist = false;
                         for(DataSnapshot data: snapshot.getChildren()) {
-                            if(data.child("pName").getValue().toString().equals(pName.getText().toString()) &&
-                                    data.child("store").getValue().toString().equals(storeId)) {
-                                exist = true;
-                                Toast.makeText(AddFloor.this, "Product already exists", Toast.LENGTH_SHORT).show();
-                                break;
+                            for(DataSnapshot data2: data.getChildren()) {
+                                if(data2.child("pName").getValue().toString().equals(pName.getText().toString()) &&
+                                        data2.child("store").getValue().toString().equals(storeId)) {
+                                    exist = true;
+                                    Toast.makeText(AddFloor.this, "Product already exists in that store", Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
                             }
+                            if(exist)
+                                break;
                         }
                         if(!exist) {
                             if(category.equals("Tile")) {
@@ -159,11 +158,9 @@ public class AddFloor extends AppCompatActivity {
                                         Double.parseDouble(longUnit.getText().toString()),
                                         Double.parseDouble(thickness.getText().toString()),
                                         brand.getText().toString(),
-                                        type.getText().toString(),
+                                        type,
                                         Double.parseDouble(price.getText().toString()),
-                                        category,
-                                        Double.parseDouble(stock.getText().toString()),
-                                        material.getText().toString());
+                                        Double.parseDouble(stock.getText().toString()));
                                 dao.addTile(newTile).addOnSuccessListener(suc -> {
                                     Toast.makeText(AddFloor.this, "New Product is added", Toast.LENGTH_SHORT).show();
                                     startActivity(toAdmin);
@@ -181,11 +178,9 @@ public class AddFloor extends AppCompatActivity {
                                         Double.parseDouble(longUnit.getText().toString()),
                                         Double.parseDouble(thickness.getText().toString()),
                                         brand.getText().toString(),
-                                        type.getText().toString(),
+                                        type,
                                         Double.parseDouble(price.getText().toString()),
-                                        category,
-                                        Double.parseDouble(stock.getText().toString()),
-                                        material.getText().toString());
+                                        Double.parseDouble(stock.getText().toString()));
                                 dao.addStone(newStone).addOnSuccessListener(suc -> {
                                     Toast.makeText(AddFloor.this, "New Product is added", Toast.LENGTH_SHORT).show();
                                     startActivity(toAdmin);
@@ -195,6 +190,7 @@ public class AddFloor extends AppCompatActivity {
                             }
 
                             if(category.equals("Wood")) {
+                                species = speciesSpinner.getSelectedItem().toString();
                                 Wood newWood = new Wood(
                                         storeId,
                                         pName.getText().toString(),
@@ -203,11 +199,10 @@ public class AddFloor extends AppCompatActivity {
                                         Double.parseDouble(longUnit.getText().toString()),
                                         Double.parseDouble(thickness.getText().toString()),
                                         brand.getText().toString(),
-                                        type.getText().toString(),
+                                        type,
                                         Double.parseDouble(price.getText().toString()),
-                                        category,
                                         Double.parseDouble(stock.getText().toString()),
-                                        species.getText().toString());
+                                        species);
                                 dao.addWood(newWood).addOnSuccessListener(suc -> {
                                     Toast.makeText(AddFloor.this, "New Product is added", Toast.LENGTH_SHORT).show();
                                     startActivity(toAdmin);
@@ -225,11 +220,9 @@ public class AddFloor extends AppCompatActivity {
                                         Double.parseDouble(longUnit.getText().toString()),
                                         Double.parseDouble(thickness.getText().toString()),
                                         brand.getText().toString(),
-                                        type.getText().toString(),
+                                        type,
                                         Double.parseDouble(price.getText().toString()),
-                                        category,
-                                        Double.parseDouble(stock.getText().toString()),
-                                        waterResis);
+                                        Double.parseDouble(stock.getText().toString()));
                                 dao.addLaminate(newLaminate).addOnSuccessListener(suc -> {
                                     Toast.makeText(AddFloor.this, "New Product is added", Toast.LENGTH_SHORT).show();
                                     startActivity(toAdmin);
@@ -247,11 +240,9 @@ public class AddFloor extends AppCompatActivity {
                                         Double.parseDouble(longUnit.getText().toString()),
                                         Double.parseDouble(thickness.getText().toString()),
                                         brand.getText().toString(),
-                                        type.getText().toString(),
+                                        type,
                                         Double.parseDouble(price.getText().toString()),
-                                        category,
-                                        Double.parseDouble(stock.getText().toString()),
-                                        waterProof);
+                                        Double.parseDouble(stock.getText().toString()));
                                 dao.addVinyl(newVinyl).addOnSuccessListener(suc -> {
                                     Toast.makeText(AddFloor.this, "New Product is added", Toast.LENGTH_SHORT).show();
                                     startActivity(toAdmin);
