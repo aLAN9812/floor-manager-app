@@ -18,24 +18,24 @@ public class Admin extends AppCompatActivity {
         this.setTitle("Admin Page");
 
         toAdd = new Intent(this, AddFloor.class);
+        toAdd.addFlags(toAdd.FLAG_ACTIVITY_CLEAR_TOP);
         toHome = new Intent(this, Home.class);
+        toHome.addFlags(toHome.FLAG_ACTIVITY_CLEAR_TOP);
         toAdminSearch = new Intent(this, AdminSearch.class);
+        toAdminSearch.addFlags(toAdminSearch.FLAG_ACTIVITY_CLEAR_TOP);
 
         add = findViewById(R.id.save);
         add.setOnClickListener(v -> {
-            toAdd.addFlags(toAdd.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toAdd);
         });
 
         back = findViewById(R.id.cancel);
         back.setOnClickListener(v -> {
-            toHome.addFlags(toHome.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toHome);
         });
 
         editDelete = findViewById(R.id.editDelete);
         editDelete.setOnClickListener(v -> {
-            toAdminSearch.addFlags(toAdminSearch.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toAdminSearch);
         });
 

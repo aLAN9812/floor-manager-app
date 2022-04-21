@@ -1,8 +1,13 @@
 package edu.qc.seclass.fim;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -71,4 +76,31 @@ public class DAOFloor {
 
     public Task<Void> updateVinyl(String key, HashMap<String, Object> hashMap) { return vinyl.child(key).updateChildren(hashMap); }
 
+    public void moveData(String key, DatabaseReference from, DatabaseReference to, HashMap<String, Object> hashMap) {
+        from.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                to.child(key).updateChildren(hashMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void moveToWood(String key, DatabaseReference from, DatabaseReference to, HashMap<String, Object> hashMap) {
+        from.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                to.child(key).updateChildren(hashMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

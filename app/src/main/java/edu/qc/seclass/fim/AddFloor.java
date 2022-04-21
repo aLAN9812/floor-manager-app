@@ -111,15 +111,15 @@ public class AddFloor extends AppCompatActivity {
             }
         });
 
+        toAdmin = new Intent(this, Admin.class);
+        toAdmin.addFlags(toAdmin.FLAG_ACTIVITY_CLEAR_TOP);
+
         add = findViewById(R.id.save);
         add.setOnClickListener(v -> {
-            toAdmin.addFlags(toAdmin.FLAG_ACTIVITY_CLEAR_TOP);
-
             store = storeSpinner.getSelectedItem().toString();
             storeId = store.substring(store.length() - 4);
             category = categorySpinner.getSelectedItem().toString();
             type = typeSpinner.getSelectedItem().toString();
-
 
             dao = new DAOFloor();
             root = dao.getDatabaseReference();
@@ -133,6 +133,14 @@ public class AddFloor extends AppCompatActivity {
                     price.getText().toString().isEmpty() ||
                     stock.getText().toString().isEmpty())
                 Toast.makeText(this, "Please enter all information", Toast.LENGTH_SHORT).show();
+            else if(Double.parseDouble(wide.getText().toString()) == 0)
+                Toast.makeText(this, "Cannot have 0 width", Toast.LENGTH_SHORT).show();
+            else if(Double.parseDouble(longUnit.getText().toString()) == 0)
+                Toast.makeText(this, "Cannot have 0 Length", Toast.LENGTH_SHORT).show();
+            else if(Double.parseDouble(thickness.getText().toString()) == 0)
+                Toast.makeText(this, "Cannot have 0 Thickness", Toast.LENGTH_SHORT).show();
+            else if(Double.parseDouble(price.getText().toString()) == 0)
+                Toast.makeText(this, "Cannot have 0 price", Toast.LENGTH_SHORT).show();
             else {
                 root.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -150,6 +158,7 @@ public class AddFloor extends AppCompatActivity {
                             if(exist)
                                 break;
                         }
+
                         if(!exist) {
                             if(category.equals("Tile")) {
                                 Tile newTile = new Tile(
@@ -263,10 +272,8 @@ public class AddFloor extends AppCompatActivity {
             }
         });
 
-        toAdmin = new Intent(this, Admin.class);
         cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(v -> {
-            toAdmin.addFlags(toAdmin.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toAdmin);
         });
     }

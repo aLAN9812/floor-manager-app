@@ -49,7 +49,9 @@ public class AdminSearch extends AppCompatActivity {
         pNameEt = findViewById(R.id.pName);
 
         toEditDelete = new Intent(this, EditDelete.class);
+        toEditDelete.addFlags(toEditDelete.FLAG_ACTIVITY_CLEAR_TOP);
         toBack = new Intent(this, Admin.class);
+        toBack.addFlags(toBack.FLAG_ACTIVITY_CLEAR_TOP);
 
         search = findViewById(R.id.search);
         search.setOnClickListener(v -> {
@@ -92,7 +94,7 @@ public class AdminSearch extends AppCompatActivity {
                     if(found) {
                         bundle = new Bundle();
                         bundle.putString("key", key);
-                        bundle.putString("store", store.substring(store.length() - 4));
+                        bundle.putString("store", store);
                         bundle.putString("category", category);
                         bundle.putString("type", type);
                         bundle.putString("pName", pName);
@@ -103,7 +105,8 @@ public class AdminSearch extends AppCompatActivity {
                         bundle.putString("brand", brand);
                         bundle.putString("price", price);
                         bundle.putString("stock", stock);
-                        bundle.putString("species", species);
+                        if(category.equals("Wood"))
+                            bundle.putString("species", species);
                         toEditDelete.putExtras(bundle);
                         startActivity(toEditDelete);
                     }
@@ -121,7 +124,6 @@ public class AdminSearch extends AppCompatActivity {
 
         back = findViewById(R.id.cancel);
         back.setOnClickListener(v -> {
-            toBack.addFlags(toBack.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toBack);
         });
     }
