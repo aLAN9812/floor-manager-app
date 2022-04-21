@@ -15,17 +15,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchResult extends AppCompatActivity {
     private ListView listView;
     private Bundle bundle;
-    private String store;
-    private String category;
-    private String type;
+    private String store, category, type, pName, color, wide, longUnit, thickness, brand, price, stock, species;
     private Button back;
     private Intent toSearch;
     private DAOFloor dao;
-    private String pName, color, wide, longUnit, thickness, brand, price, stock, species;
     private DatabaseReference ref;
 
     @Override
@@ -42,11 +40,16 @@ public class SearchResult extends AppCompatActivity {
         type = bundle.getString("type");
         back = findViewById(R.id.cancel);
         toSearch = new Intent(this, Search.class);
+
         dao = new DAOFloor();
 
         ArrayList<String> list = new ArrayList<>();
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.item, list);
+        ArrayAdapter adapter = new ArrayAdapter<>(this, R.layout.item, list);
         listView.setAdapter(adapter);
+
+//        ArrayList<Tile> tileList = new ArrayList<>();
+//        TileAdapter tileAdapter = new TileAdapter(this, tileList);
+//        listView.setAdapter(tileAdapter);
 
         if(category.equals("Tile"))
             ref = dao.getTile();
@@ -92,7 +95,24 @@ public class SearchResult extends AppCompatActivity {
             }
         });
 
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot data: snapshot.getChildren()) {
+//                    Tile tile = data.getValue(Tile.class);
+//
+//                    tileList.add(tile);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
         back.setOnClickListener(v -> {
+            toSearch.addFlags(toSearch.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toSearch);
         });
     }

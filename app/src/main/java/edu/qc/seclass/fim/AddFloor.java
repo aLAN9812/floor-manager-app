@@ -27,7 +27,7 @@ public class AddFloor extends AppCompatActivity {
     private Button add, cancel;
     private Intent toAdmin;
     private String store, storeId, category, type, species;
-    private DatabaseReference ref, root;
+    private DatabaseReference root;
     private ArrayAdapter<String> storeAdapter, categoryAdapter, tiletypeAdapter, stonetypeAdapter, woodtypeAdapter, laminatetypeAdapter, vinyltypeAdapter, speciesAdapter;
 
     @Override
@@ -111,8 +111,10 @@ public class AddFloor extends AppCompatActivity {
             }
         });
 
-        add = findViewById(R.id.add);
+        add = findViewById(R.id.save);
         add.setOnClickListener(v -> {
+            toAdmin.addFlags(toAdmin.FLAG_ACTIVITY_CLEAR_TOP);
+
             store = storeSpinner.getSelectedItem().toString();
             storeId = store.substring(store.length() - 4);
             category = categorySpinner.getSelectedItem().toString();
@@ -264,6 +266,7 @@ public class AddFloor extends AppCompatActivity {
         toAdmin = new Intent(this, Admin.class);
         cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(v -> {
+            toAdmin.addFlags(toAdmin.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toAdmin);
         });
     }

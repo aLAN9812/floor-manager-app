@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
-    tools:context=".AddFloor">
+    tools:context=".EditDelete">
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -30,10 +30,11 @@
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
-            <Spinner
+            <TextView
                 android:id="@+id/store"
                 android:layout_width="200dp"
-                android:layout_height="45dp" />
+                android:layout_height="45dp"
+                android:ems="10" />
 
         </TableRow>
 
@@ -50,10 +51,11 @@
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
-            <Spinner
+            <TextView
                 android:id="@+id/category"
                 android:layout_width="200dp"
-                android:layout_height="45dp" />
+                android:layout_height="45dp"
+                android:ems="10" />
 
         </TableRow>
 
@@ -70,9 +72,9 @@
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="200dp"
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="140dp"
                 android:layout_height="45dp" />
 
         </TableRow>
@@ -92,10 +94,11 @@
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/speciesSpinner"
+            <TextView
+                android:id="@+id/species"
                 android:layout_width="200dp"
-                android:layout_height="45dp" />
+                android:layout_height="45dp"
+                android:text="TextView" />
 
         </TableRow>
 
@@ -112,12 +115,11 @@
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/pName"
                 android:layout_width="200dp"
-                android:layout_height="45dp"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_height="45dp" />
+
         </TableRow>
 
         <TableRow
@@ -277,8 +279,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:text="Add product"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <Button
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 

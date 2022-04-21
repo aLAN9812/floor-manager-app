@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 public class Search extends AppCompatActivity {
@@ -98,6 +97,7 @@ public class Search extends AppCompatActivity {
 
         back = findViewById(R.id.cancel);
         back.setOnClickListener(v -> {
+            toHome.addFlags(toHome.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toHome);
         });
 

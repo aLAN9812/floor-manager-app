@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FIM">
         <activity
+            android:name=".EditDelete"
+            android:exported="false"
+            android:noHistory = "true" />
+        <activity
+            android:name=".AdminSearch"
+            android:exported="false" />
+        <activity
             android:name=".Admin"
             android:exported="false" />
         <activity
@@ -17,18 +24,21 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SearchResult"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory = "true" />
         <activity
             android:name=".Search"
             android:exported="false" />
         <activity
             android:name=".AddFloor"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory = "true" />
     </application>
 
 </manifest>

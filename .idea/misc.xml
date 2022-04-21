@@ -4,8 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_add_floor.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_admin.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_admin_search.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_edit_delete.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_home.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_recyler_search_result.xml" value="0.378125" />
         <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_search.xml" value="0.378125" />
         <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_search_result.xml" value="0.22777777777777777" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/activity_testing.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/data.xml" value="0.378125" />
+        <entry key="..\:/Users/chant/Documents/GitHub/floor-manager-app/app/src/main/res/layout/item.xml" value="0.378125" />
         <entry key="..\:/Users/chant/OneDrive - CUNY/CSCI370/FIM/app/src/main/res/layout/activity_add_floor.xml" value="0.33" />
         <entry key="..\:/Users/chant/OneDrive - CUNY/CSCI370/FIM/app/src/main/res/layout/activity_admin.xml" value="0.378125" />
         <entry key="..\:/Users/chant/OneDrive - CUNY/CSCI370/FIM/app/src/main/res/layout/activity_floor_list.xml" value="0.378125" />

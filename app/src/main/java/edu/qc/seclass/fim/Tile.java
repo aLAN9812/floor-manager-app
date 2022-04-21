@@ -2,6 +2,8 @@ package edu.qc.seclass.fim;
 
 public class Tile extends  Floor {
 
+    public Tile() { super(); }
+
     public Tile(String store,
                 String pName,
                 String color,
