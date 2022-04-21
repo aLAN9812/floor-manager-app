@@ -300,7 +300,7 @@ public class EditDelete extends AppCompatActivity {
                     brandEt.getText().toString().isEmpty() ||
                     priceEt.getText().toString().isEmpty() ||
                     stockEt.getText().toString().isEmpty())
-                Toast.makeText(this, "Invalid information", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter all information", Toast.LENGTH_SHORT).show();
             else if(Double.parseDouble(wideEt.getText().toString()) == 0)
                 Toast.makeText(this, "Cannot have 0 width", Toast.LENGTH_SHORT).show();
             else if(Double.parseDouble(longUnitEt.getText().toString()) == 0)
