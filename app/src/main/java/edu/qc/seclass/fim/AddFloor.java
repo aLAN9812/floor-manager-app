@@ -143,7 +143,7 @@ public class AddFloor extends AppCompatActivity {
                                 if(data2.child("pName").getValue().toString().equals(pName.getText().toString()) &&
                                         data2.child("store").getValue().toString().equals(storeId)) {
                                     exist = true;
-                                    Toast.makeText(AddFloor.this, "Product already exists in that store", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AddFloor.this, "Same product name already exists in that store", Toast.LENGTH_SHORT).show();
                                     break;
                                 }
                             }

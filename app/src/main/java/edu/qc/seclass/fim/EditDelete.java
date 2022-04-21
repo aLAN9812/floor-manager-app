@@ -27,10 +27,10 @@ public class EditDelete extends AppCompatActivity {
 
     private Bundle bundle;
     private String store, category, type, pName, color, wide, longUnit, thickness, brand, price, stock, species;
-    private String newColor, newBrand;
+    private String newPName, newColor, newBrand;
     private Double newWide, newLong, newThickness, newPrice, newStock;
-    private TextView storeTv, categoryTv, pNameTv, speciesTv, typeTv;
-    private EditText colorEt, wideEt, longUnitEt, thicknessEt, brandEt, priceEt, stockEt;
+    private TextView storeTv, categoryTv, speciesTv, typeTv;
+    private EditText pNameEt, colorEt, wideEt, longUnitEt, thicknessEt, brandEt, priceEt, stockEt;
     private Button save, delete, cancel;
     private Intent toAdminSearch;
     private DAOFloor dao;
@@ -62,7 +62,7 @@ public class EditDelete extends AppCompatActivity {
         storeTv = findViewById(R.id.store);
         categoryTv = findViewById(R.id.category);
         typeTv = findViewById(R.id.type);
-        pNameTv = findViewById(R.id.pName);
+        pNameEt = findViewById(R.id.pName);
         speciesTv = findViewById(R.id.species);
         colorEt = findViewById(R.id.color);
         wideEt = findViewById(R.id.wide);
@@ -76,7 +76,7 @@ public class EditDelete extends AppCompatActivity {
         storeTv.setText(store);
         categoryTv.setText(category);
         typeTv.setText(type);
-        pNameTv.setText(pName);
+        pNameEt.setText(pName);
         colorEt.setText(color);
         wideEt.setText(wide);
         longUnitEt.setText(longUnit);
@@ -94,6 +94,7 @@ public class EditDelete extends AppCompatActivity {
 
         save = findViewById(R.id.save);
         save.setOnClickListener(v -> {
+            newPName = pNameEt.getText().toString();
             newColor = colorEt.getText().toString();
             newWide = Double.parseDouble(wideEt.getText().toString());
             newLong = Double.parseDouble(longUnitEt.getText().toString());
@@ -102,6 +103,7 @@ public class EditDelete extends AppCompatActivity {
             newPrice = Double.parseDouble(priceEt.getText().toString());
             newStock = Double.parseDouble(stockEt.getText().toString());
             hashMap = new HashMap<>();
+            hashMap.put("pName", newPName);
             hashMap.put("color", newColor);
             hashMap.put("wide", newWide);
             hashMap.put("longUnit", newLong);
@@ -109,48 +111,75 @@ public class EditDelete extends AppCompatActivity {
             hashMap.put("brand", newBrand);
             hashMap.put("price", newPrice);
             hashMap.put("stock", newStock);
-            if(category.equals("Tile")) {
-                toAdminSearch.addFlags(toAdminSearch.FLAG_ACTIVITY_CLEAR_TOP);
-                dao.updateTile(key, hashMap).addOnSuccessListener(suc -> {
-                    Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(toAdminSearch);
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-            }
-            if(category.equals("Stone")) {
-                dao.updateStone(key, hashMap).addOnSuccessListener(suc -> {
-                    Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(toAdminSearch);
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-            }
-            if(category.equals("Wood")) {
-                dao.updateWood(key, hashMap).addOnSuccessListener(suc -> {
-                    Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(toAdminSearch);
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-            }
-            if(category.equals("Laminate")) {
-                dao.updateLaminate(key, hashMap).addOnSuccessListener(suc -> {
-                    Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(toAdminSearch);
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-                });
 
-            }
-            if(category.equals("Vinyl")) {
-                dao.updateVinyl(key, hashMap).addOnSuccessListener(suc -> {
-                    Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(toAdminSearch);
-                }).addOnFailureListener(er -> {
-                    Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-            }
+            dao.getDatabaseReference().addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    boolean exist = false;
+                    for(DataSnapshot data: snapshot.getChildren()) {
+                        for(DataSnapshot data2: data.getChildren()) {
+                            if(data2.child("pName").getValue().toString().equals(pNameEt.getText().toString()) &&
+                                    data2.child("store").getValue().toString().equals(store)) {
+                                exist = true;
+                                Toast.makeText(EditDelete.this, "Same product name already exists in that store", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                        if(exist)
+                            break;
+                    }
+                    if(!exist) {
+                        if(category.equals("Tile")) {
+                            toAdminSearch.addFlags(toAdminSearch.FLAG_ACTIVITY_CLEAR_TOP);
+                            dao.updateTile(key, hashMap).addOnSuccessListener(suc -> {
+                                Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
+                                startActivity(toAdminSearch);
+                            }).addOnFailureListener(er -> {
+                                Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                        if(category.equals("Stone")) {
+                            dao.updateStone(key, hashMap).addOnSuccessListener(suc -> {
+                                Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
+                                startActivity(toAdminSearch);
+                            }).addOnFailureListener(er -> {
+                                Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                        if(category.equals("Wood")) {
+                            dao.updateWood(key, hashMap).addOnSuccessListener(suc -> {
+                                Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
+                                startActivity(toAdminSearch);
+                            }).addOnFailureListener(er -> {
+                                Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                        if(category.equals("Laminate")) {
+                            dao.updateLaminate(key, hashMap).addOnSuccessListener(suc -> {
+                                Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
+                                startActivity(toAdminSearch);
+                            }).addOnFailureListener(er -> {
+                                Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
+                        }
+                        if(category.equals("Vinyl")) {
+                            dao.updateVinyl(key, hashMap).addOnSuccessListener(suc -> {
+                                Toast.makeText(EditDelete.this, "Product is Updated", Toast.LENGTH_SHORT).show();
+                                startActivity(toAdminSearch);
+                            }).addOnFailureListener(er -> {
+                                Toast.makeText(EditDelete.this, "" + er.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         });
 
         delete = findViewById(R.id.delete);
