@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 public class Home extends AppCompatActivity {
-    private Intent toSearch, toAdmin;
+    private Intent toSearch, toLogin;
     private Button customer, employee;
 
     @Override
@@ -18,7 +18,7 @@ public class Home extends AppCompatActivity {
         this.setTitle("Home");
 
         toSearch = new Intent(this, Search.class);
-        toAdmin = new Intent(this, Admin.class);
+        toLogin = new Intent(this, Login.class);
 
         customer = findViewById(R.id.customer);
         customer.setOnClickListener(v -> {
@@ -26,7 +26,7 @@ public class Home extends AppCompatActivity {
         });
         employee = findViewById(R.id.employee);
         employee.setOnClickListener(v -> {
-            startActivity(toAdmin);
+            startActivity(toLogin);
         });
     }
 }

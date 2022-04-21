@@ -147,6 +147,8 @@ public class EditDelete extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_delete);
 
+        this.setTitle("Edit/Delete Product");
+
         speciesRow = findViewById(R.id.speciesRow);
 
         categorySpinner = findViewById(R.id.category);
@@ -171,7 +173,6 @@ public class EditDelete extends AppCompatActivity {
                 if(adapterView.getSelectedItem().toString().equals("Wood")) {
                     speciesRow.setVisibility(View.VISIBLE);
                     typeSpinner.setAdapter(woodtypeAdapter);
-                    typeSpinner.setSelection(typePos);
                 }
 
                 if(adapterView.getSelectedItem().toString().equals("Laminate")) {
@@ -183,6 +184,7 @@ public class EditDelete extends AppCompatActivity {
                     speciesRow.setVisibility(View.GONE);
                     typeSpinner.setAdapter(vinyltypeAdapter);
                 }
+                typeSpinner.setSelection(typePos);
             }
 
             @Override
@@ -227,13 +229,11 @@ public class EditDelete extends AppCompatActivity {
             typeSpinner.setAdapter(tiletypeAdapter);
             typeArray = getResources().getStringArray(R.array.tileType);
             typePos = Arrays.asList(typeArray).indexOf(type);
-            typeSpinner.setSelection(typePos);
         }
         if(category.equals("Stone")) {
             typeSpinner.setAdapter(stonetypeAdapter);
             typeArray = getResources().getStringArray(R.array.stoneType);
             typePos = Arrays.asList(typeArray).indexOf(type);
-            typeSpinner.setSelection(typePos);
         }
         if(category.equals("Wood")) {
             speciesRow.setVisibility(View.VISIBLE);
@@ -241,7 +241,6 @@ public class EditDelete extends AppCompatActivity {
             typeSpinner.setAdapter(woodtypeAdapter);
             typeArray = getResources().getStringArray(R.array.woodType);
             typePos = Arrays.asList(typeArray).indexOf(type);
-            typeSpinner.setSelection(typePos);
             speciesArray = getResources().getStringArray(R.array.woodSpecies);
             speciesPos = Arrays.asList(speciesArray).indexOf(species);
             speciesSpinner.setSelection(speciesPos);
@@ -250,14 +249,13 @@ public class EditDelete extends AppCompatActivity {
             typeSpinner.setAdapter(laminatetypeAdapter);
             typeArray = getResources().getStringArray(R.array.laminateType);
             typePos = Arrays.asList(typeArray).indexOf(type);
-            typeSpinner.setSelection(typePos);
         }
         if(category.equals("Vinyl")) {
             typeSpinner.setAdapter(vinyltypeAdapter);
             typeArray = getResources().getStringArray(R.array.vinylType);
             typePos = Arrays.asList(typeArray).indexOf(type);
-            typeSpinner.setSelection(typePos);
         }
+
         pName = bundle.getString("pName");
         color = bundle.getString("color");
         wide = bundle.getString("wide");
