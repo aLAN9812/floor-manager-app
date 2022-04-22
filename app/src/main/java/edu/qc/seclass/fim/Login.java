@@ -20,8 +20,7 @@ public class Login extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
 
-        usernameEt.setText("");
-        pwEt.setText("");
+        finish();
     }
 
     @Override

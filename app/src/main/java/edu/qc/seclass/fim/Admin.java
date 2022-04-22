@@ -5,10 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Admin extends AppCompatActivity {
     private Intent toAdd, toHome, toAdminSearch;
     private Button add, back, editDelete;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Toast.makeText(Admin.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class Admin extends AppCompatActivity {
 
         back = findViewById(R.id.cancel);
         back.setOnClickListener(v -> {
+            Toast.makeText(Admin.this, "Logout Successfully", Toast.LENGTH_SHORT).show();
             startActivity(toHome);
         });
 
