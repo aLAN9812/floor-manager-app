@@ -160,7 +160,7 @@
                         android:id="@+id/labelWide"
                         android:layout_width="140dp"
                         android:layout_height="45dp"
-                        android:text="Wide(inch):"
+                        android:text="Width(inch):"
                         android:textColor="@color/black"
                         android:textSize="19sp"
                         android:textStyle="bold" />
@@ -182,7 +182,7 @@
                         android:id="@+id/labelLong"
                         android:layout_width="140dp"
                         android:layout_height="45dp"
-                        android:text="long(inch):"
+                        android:text="Length(inch):"
                         android:textColor="@color/black"
                         android:textSize="19sp"
                         android:textStyle="bold" />
