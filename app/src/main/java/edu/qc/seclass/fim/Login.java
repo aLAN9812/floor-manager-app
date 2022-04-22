@@ -17,6 +17,14 @@ public class Login extends AppCompatActivity {
     private Button login, back;
 
     @Override
+    protected void onPause(){
+        super.onPause();
+
+        usernameEt.setText("");
+        pwEt.setText("");
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -36,8 +44,9 @@ public class Login extends AppCompatActivity {
             inputusername = usernameEt.getText().toString();
             inputpw = pwEt.getText().toString();
 
-            if(inputusername.equals(username) && inputpw.equals(pw))
+            if(inputusername.equals(username) && inputpw.equals(pw)) {
                 startActivity(toAdmin);
+            }
             else if(inputusername.isEmpty() || inputpw.isEmpty())
                 Toast.makeText(this, "Please enter username and password", Toast.LENGTH_SHORT).show();
             else if(!inputusername.equals(username) || !inputpw.equals(pw))

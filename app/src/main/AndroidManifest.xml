@@ -11,8 +11,7 @@
         android:theme="@style/Theme.FIM">
         <activity
             android:name=".Login"
-            android:exported="false"
-            android:noHistory="true" />
+            android:exported="false" />
         <activity
             android:name=".EditDelete"
             android:exported="false"
